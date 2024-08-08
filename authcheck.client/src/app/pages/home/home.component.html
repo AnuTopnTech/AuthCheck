@@ -1,0 +1,23 @@
+<div class="flex items-center flex-col pt-56 h-screen">
+  <div class="h-screen">
+<h1 class="text-4xl text-center font-bold my-10">Welcome to
+    <span class="text-5xl text-green-800">AuthApp</span></h1>
+<div class="flex flex-col items-center gap-5 justify-center">
+  @if(authService.getUserDetail()){
+  <h1 class="text-2xl">
+    You are logged in as <span class="font-bold bg-blue-500 py-2 px-4 rounded-md text-white">
+      {{authService.getUserDetail()?.fullName}}
+    </span>
+  </h1>
+  }@else{
+  <h1 class="text-2 xl">you are not logged in</h1>
+ 
+    <button class="bg-blue-500 hover:bg-blue-700
+        text-white font-bold py-2 px-4 rounded-md" [routerLink]="['login']">
+      Login
+    </button>
+  
+  }
+</div>
+  </div>
+</div>

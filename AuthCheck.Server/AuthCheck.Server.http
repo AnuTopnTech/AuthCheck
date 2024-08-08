@@ -1,0 +1,6 @@
+@AuthCheck.Server_HostAddress = http://localhost:5090
+
+GET {{AuthCheck.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
