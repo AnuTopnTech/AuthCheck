@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ValidationError } from '../../interfaces/validation-error';
 
 @Component({
@@ -22,6 +22,8 @@ export class RegisterComponent implements OnInit {
   matSnackbar = inject(MatSnackBar);
   errors!: ValidationError[];
 
+  constructor(private http: HttpClient) { }
+
   register() {
     this.authService.register(
       this.registerForm.value
@@ -35,11 +37,16 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login'])
       },
       error: (err: HttpErrorResponse) => {
-        if (err!.status === 400) {
-          this.errors = err!.error;
+        if (err.status === 400) {
+          this.errors = err.error;
           this.matSnackbar.open('Validations error', 'Close', {
             duration: 5000,
             horizontalPosition: 'center',
+          });
+        } else {
+          console.error(err);
+          this.matSnackbar.open('Server error', 'Close', {
+            duration: 5000, horizontalPosition: 'center',
           });
         }
       },
@@ -50,10 +57,10 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       fullName: ['', Validators.required],
       confirmPassword: ['', Validators.required],
-      image: new FormControl(),
+      image: new FormControl(null, Validators.required),
      
     }, { validator: this.passwordMatchValidator }
     );

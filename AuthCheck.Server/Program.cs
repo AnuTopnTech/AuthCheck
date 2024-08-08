@@ -19,7 +19,7 @@ builder.Configuration.GetConnectionString("DefaultConnection")
 
 builder.Services.AddDbContext<AppDbContext>(options=>options.UseSqlite("Data Source=auth.db"));
 
-//builder.Services.AddIdentity<AppUser, IdentityRole>().AddDefaultTokenProviders().AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddIdentity<AppUser, IdentityRole>().AddDefaultTokenProviders().AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddAuthentication(opt => {
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

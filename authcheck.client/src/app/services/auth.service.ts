@@ -33,7 +33,6 @@ export class AuthService {
   register(data: RegisterRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}account/register`, data)
       
-    
   }
   forgetPassword = (email: string): Observable<AuthResponse> => this.http.post<AuthResponse>(`${this.apiUrl}account/forget-password`, {
     email
